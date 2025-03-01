@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sensor Data</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+      /* Import Futuristic Font */
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+      /* Dark Theme with Neon Effect */
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: #0a0a0a;
+        color: #00eaff;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        text-shadow: 0px 0px 15px #00eaff;
+      }
+
+      p {
+        font-size: 1.5rem;
+      }
+
+      /* Distance Box */
+      #distance {
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 10px 20px;
+        background: rgba(0, 234, 255, 0.2);
+        border: 2px solid #00eaff;
+        border-radius: 10px;
+        display: inline-block;
+        box-shadow: 0 0 15px #00eaff;
+        transition: 0.3s ease-in-out;
+      }
+
+      /* Glowing Effect */
+      #distance:hover {
+        box-shadow: 0 0 25px #00eaff;
+        transform: scale(1.1);
+      }
+
+      /* Animated Pulsing Effect */
+      @keyframes pulse {
+        0% {
+          text-shadow: 0px 0px 10px #00eaff;
+        }
+        50% {
+          text-shadow: 0px 0px 25px #00eaff;
+        }
+        100% {
+          text-shadow: 0px 0px 10px #00eaff;
+        }
+      }
+
+      #distance {
+        animation: pulse 1.5s infinite alternate;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ultrasonic Sensor Distance</h1>
+    <p>Distance: <span id="distance">Loading...</span> cm</p>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyCMnJsfeyg-PCWuFPENgeelzIaHSSIIx7I",
+        authDomain: "sending-data-to-web.firebaseapp.com",
+        databaseURL: "https://sending-data-to-web-default-rtdb.firebaseio.com",
+        projectId: "sending-data-to-web",
+        storageBucket: "sending-data-to-web.firebasestorage.app",
+        messagingSenderId: "1075857319392",
+        appId: "1:1075857319392:web:a70c2579e7c7ca989db785",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      var database = firebase.database();
+
+      function fetchDistance() {
+        database.ref("/sensor/distance").on("value", function (snapshot) {
+          document.getElementById("distance").innerText =
+            snapshot.val()
+        });
+      }
+
+      fetchDistance();
+    </script>
+  </body>
+</html>
