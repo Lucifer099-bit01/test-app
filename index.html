@@ -35,7 +35,7 @@
       }
 
       /* Distance Box */
-      #distance {
+      .data {
         font-size: 2rem;
         font-weight: bold;
         padding: 10px 20px;
@@ -48,7 +48,7 @@
       }
 
       /* Glowing Effect */
-      #distance:hover {
+      .data:hover {
         box-shadow: 0 0 25px #00eaff;
         transform: scale(1.1);
       }
@@ -66,14 +66,16 @@
         }
       }
 
-      #distance {
+      .data {
         animation: pulse 1.5s infinite alternate;
       }
     </style>
   </head>
   <body>
     <h1>Ultrasonic Sensor Distance</h1>
-    <p>Distance: <span id="distance">Loading...</span> cm</p>
+    <p>Distance: <span class="data" id="distance">Loading...</span> cm</p>
+    <h1>Temperature Sensor</h1>
+    <p>Temperature: <span class="data" id="temp">Loading...</span> Celsuis</p>
 
     <script>
       var firebaseConfig = {
@@ -95,8 +97,14 @@
             snapshot.val()
         });
       }
-
+      function fetchTemp() {
+        database.ref("/sensor/temperature").on("value", function (snapshot) {
+          document.getElementById("temp").innerText =
+            snapshot.val()
+        });
+      }
       fetchDistance();
+      fetchTemp();
     </script>
   </body>
 </html>
