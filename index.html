@@ -7,10 +7,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
-      /* Import Futuristic Font */
       @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
 
-      /* Dark Theme with Neon Effect */
       body {
         font-family: "Orbitron", sans-serif;
         background: #0a0a0a;
@@ -22,21 +20,23 @@
         align-items: center;
         height: 100vh;
         margin: 0;
+        padding: 20px;
       }
 
       h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
         text-transform: uppercase;
         text-shadow: 0px 0px 15px #00eaff;
+        margin-bottom: 10px;
       }
 
       p {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+        margin: 10px 0;
       }
 
-      /* Distance Box */
       .data {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: bold;
         padding: 10px 20px;
         background: rgba(0, 234, 255, 0.2);
@@ -47,13 +47,11 @@
         transition: 0.3s ease-in-out;
       }
 
-      /* Glowing Effect */
       .data:hover {
         box-shadow: 0 0 25px #00eaff;
-        transform: scale(1.1);
+        transform: scale(1.05);
       }
 
-      /* Animated Pulsing Effect */
       @keyframes pulse {
         0% {
           text-shadow: 0px 0px 10px #00eaff;
@@ -69,13 +67,39 @@
       .data {
         animation: pulse 1.5s infinite alternate;
       }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+        .data {
+          font-size: 1.5rem;
+          padding: 8px 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.5rem;
+        }
+        p {
+          font-size: 0.9rem;
+        }
+        .data {
+          font-size: 1.2rem;
+          padding: 6px 12px;
+        }
+      }
     </style>
   </head>
   <body>
     <h1>Ultrasonic Sensor Distance</h1>
     <p>Distance: <span class="data" id="distance">Loading...</span> cm</p>
     <h1>Temperature Sensor</h1>
-    <p>Temperature: <span class="data" id="temp">Loading...</span> Celsuis</p>
+    <p>Temperature: <span class="data" id="temp">Loading...</span> Celsius</p>
 
     <script>
       var firebaseConfig = {
@@ -93,14 +117,12 @@
 
       function fetchDistance() {
         database.ref("/sensor/distance").on("value", function (snapshot) {
-          document.getElementById("distance").innerText =
-            snapshot.val()
+          document.getElementById("distance").innerText = snapshot.val();
         });
       }
       function fetchTemp() {
         database.ref("/sensor/temperature").on("value", function (snapshot) {
-          document.getElementById("temp").innerText =
-            snapshot.val()
+          document.getElementById("temp").innerText = snapshot.val();
         });
       }
       fetchDistance();
